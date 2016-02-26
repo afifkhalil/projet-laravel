@@ -9,4 +9,12 @@ class Option extends Model
     //
     protected $fillable = ['name','description','price','id_category'];
     
+    public function optionCar(){
+        return $this->hasMany('App\OptionCar');
+    }
+    
+    public function category(){
+        return $this->belongsTo('App\Category');
+    }
+    
 }

@@ -46,19 +46,21 @@ $('.add-option').on('click',function(e){
   var option_id = option.attr('value');
   var el=$('#to-clone').clone().removeClass('hidden').attr('id','').addClass('row');
   var nb=$('#new_option_'+id_cat +' .row').length;
-  nb++;
- // console.log(nb, '#new_option_'+id_cat +' .row');
-  el.find('p').text(option_name);
-  //el.find('input').attr('name','price-'+id_cat+'-'+option_id).val('');
-  el.find('input').attr('name','price-'+option_id).val('');
-  $('#new_option_'+id_cat).append(el);
-   var x =$('input[name=tab_option]:hidden').attr('value'); 
-    $('input[name=tab_option]:hidden').val(x+'-'+option_id);
-      //var tab =
-     //var id=tab.val();
-     //tab.value = id+option_id;
-     option.remove();
-  
+  console.log(option_id);
+ if($('select[name=option-'+id_cat+'] option').length != 0){
+    nb++;
+   // console.log(nb, '#new_option_'+id_cat +' .row');
+    el.find('p').text(option_name);
+    //el.find('input').attr('name','price-'+id_cat+'-'+option_id).val('');
+    el.find('input').attr('name','price-'+option_id).val('');
+    $('#new_option_'+id_cat).append(el);
+    var x =$('input[name=tab_option]:hidden').val(); 
+      $('input[name=tab_option]:hidden').val(x+option_id+'-');
+        //var tab =
+       //var id=tab.val();
+       //tab.value = id+option_id;
+       option.remove();
+ }
 });
 
 

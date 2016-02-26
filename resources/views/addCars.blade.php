@@ -39,7 +39,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('pictureL','Photo') !!}
-    {!! Form::file('picture', ['multiple'=>true]) !!}
+    {!! Form::file('picture[]', ['multiple'=>true]) !!}
 </div>
 <div class="form-group">
     {!! Form::label('videoL','Video') !!}
@@ -57,13 +57,13 @@
     {!! Form::label('non','NON') !!}
 </div>
 
-
+{!! Form::hidden('tab_option', "") !!}
 @if(isset($categories))
    @foreach($categories as $c)
     @if (isset($c))
         @if (isset($opp[$c->id]))
             <h3>Categorie : {{$c->name_category}}</h3>
-            {!! Form::hidden('tab_option', "0") !!}
+            
 
             <div id="parent-{{$c->id}}" class="rows">
                 <div class="row to-copy line-input">

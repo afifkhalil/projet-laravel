@@ -17,8 +17,8 @@ class CreateOptionsTable extends Migration
             $table->text('name');
             $table->text('description');
             $table->float('price');
-            $table->integer('id_category')->unsigned();
-            $table->foreign('id_category')->references('id')->on('categories');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

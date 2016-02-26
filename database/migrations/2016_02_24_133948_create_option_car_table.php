@@ -14,10 +14,10 @@ class CreateOptionCarsTable extends Migration
     {
         Schema::create('option_cars', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_car')->unsigned();
-            $table->foreign('id_car')->references('id')->on('cars');
-            $table->integer('id_option')->unsigned();
-            $table->foreign('id_option')->references('id')->on('options');
+            $table->integer('car_id')->unsigned();
+            $table->foreign('car_id')->references('id')->on('cars');
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options');
             $table->float('option_price');
             $table->timestamps();
         });

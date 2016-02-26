@@ -21,6 +21,7 @@ Route::group(['middleware' => ['web']], function(){
    Route::put('cars/edit','CarsController@edit');
    Route::get('cars/show/{id}', ['as'=>'show', 'uses'=>'CarsController@show']);
    Route::get('cars/list',['as'=>'list', 'uses'=>'CarsController@listcars']);
+   Route::get('cars/affiche/{id}',['as'=>'affiche', 'uses'=>'CarsController@affiche']);
    //Route::get('cars/show/{$id}','CarsController@showCar');
 });
 
