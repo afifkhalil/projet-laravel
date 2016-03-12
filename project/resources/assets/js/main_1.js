@@ -84,6 +84,8 @@ $('.option_nouvelle').on('click',function(e){
     el.find('textarea.description').attr('name','description_option_'+nb).val('');
     amo.append(el);
     $('input[name=nb_option]:hidden').val(amo.find('.row').length);
+    var enregistrer=$(this).parent().find('.btn.btn-success.pull-right');
+    enregistrer.css('visibility','visible');
 });
 //$(el).css('visibility', 'hidden');
 //$(el).css('visibility', 'visible');
@@ -138,4 +140,58 @@ function cloneAjax(x,y,parent){
     $(parent).append(el);
 }
 
-$('.datepicker').datepicker()
+
+$('.modifier').on('click', function(e){
+    
+    e.preventDefault();
+    
+    var id=$(this).attr('data-id');
+    var Route=hoursRoute+id;
+    $.ajax({
+        url: Route,
+        type: 'GET',
+        data: '',
+        dataType: 'text',
+        success: function(response) {
+           var json_obj = $.parseJSON(response);
+           var output="<ul>";
+           for (var i in json_obj) 
+            {
+                output+="<li>" + json_obj[i].h + ",  " + json_obj[i].state + "</li>";
+            }
+              output+="</ul>";
+           console.log(output);
+        },
+        fail: function(response) {
+        }
+    });
+});
+
+$('.supprimer').on('click', function(e){
+    
+    e.preventDefault();
+    
+    var id=$(this).attr('data-id');
+    var Route=suppdayRoute+id;
+    $.ajax({
+        url: Route,
+        type: 'GET',
+        data: '',
+        dataType: 'text',
+        success: function(response) {
+           $( "."+id ).remove();
+        },
+        fail: function(response) {
+        }
+    });
+});
+
+
+
+
+
+if($('.datepicker').length>0){
+$('.datepicker').datepicker();
+}
+
+

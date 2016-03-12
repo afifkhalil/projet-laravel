@@ -118,7 +118,7 @@ class CustomersController extends Controller
     public function listcustomers() {
         $title = "List des clients";
 
-        $customers = Customer::all();
+        $customers = Customer::ListCustomer()->get();
 
         return view('Customers/list-customers', ['title' => $title, 'customers' => $customers]);
     }

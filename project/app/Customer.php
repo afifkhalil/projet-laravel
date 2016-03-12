@@ -13,4 +13,9 @@ class Customer extends Model
     public function testDriveHour(){
         return $this->hasMany('App\TestDriveHour');
     }
+     public function scopeListCustomer($query)
+    {
+        return $query->where('id', '>', 1);
+    }
+
 }

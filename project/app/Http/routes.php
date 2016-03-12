@@ -27,8 +27,10 @@ Route::group(['prefix'=>'dashboard/categories',  'middleware' => ['web']], funct
    
    //  Routes of Catégories
    Route::get('/',['as'=>'categoryIndex', 'uses'=>'CategoriesController@index']);
-   Route::post('/add',['as'=>'addcat', 'uses'=>'CategoriesController@store']);
+   Route::post('/add',['as'=>'categoryStore', 'uses'=>'CategoriesController@store']);
    Route::post('/addoption',['as'=>'addoption', 'uses'=>'CategoriesController@addOpCat']);
+   Route::delete('deleteCat/{id}',array('uses' => 'CategoriesController@destroyCat', 'as' => 'destroyCat'));
+   Route::delete('deleteOpt/{id}',array('uses' => 'CategoriesController@destroyOpt', 'as' => 'destroyOpt'));
 
    
   
@@ -40,6 +42,9 @@ Route::group(['prefix'=>'dashboard/testDrive',  'middleware' => ['web']], functi
    
    Route::get('/',['as'=>'testDriveIndex', 'uses'=>'TestDrivesController@index']);
    Route::post('/addDisponibility',['as'=>'adddisp', 'uses'=>'TestDrivesController@store']);
+   Route::get('/Calendar/{id}',['as'=>'Calendar', 'uses'=>'TestDrivesController@showCalendar']);
+   Route::get('/Hours/{id}',['as'=>'Hours', 'uses'=>'TestDrivesController@showHours']);
+   Route::get('/supp-day/{id}',['as'=>'supp-day', 'uses'=>'TestDrivesController@destroy']);
 
    
   

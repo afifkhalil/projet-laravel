@@ -9,12 +9,12 @@ use \Illuminate\Support\Facades\DB;
 
 use Storage;
 use Image;
-
 use App\Category;
 use App\Car;
 use App\Option;
 use App\OptionCar;
 use Illuminate\Support\Facades\Input;
+use DateTime;
 
 
 class CarsController extends Controller {
@@ -55,31 +55,27 @@ class CarsController extends Controller {
     public function store(Request $request) {
         //--ADD CAR INFOS
        //dd($request);
-       /*if(Input::hasFile('picture'))
+     if(Input::hasFile('picture'))
        {    
-           
+           $i=0;
            $images=Input::file('picture');
            foreach($images as $image){
-               Storage::put($image->getClientOriginalName(), file_get_contents($image) );
-               $image->move('..\public\uploads',$image->getClientOriginalName());
-                
-                $filename  = time() . '.' . $image->getClientOriginalExtension();
-
-                $path = public_path('profilepics/' . $filename);
-
-                Image::make($image->getRealPath())->resize(200, 200)->save($path);
-                $user->image = $filename;
-                $user->save();
+               
+                ++$i;
+                $d = new DateTime('NOW');
+                $time= $d->format('Y-m-d_H-i-s').$i;
+                Storage::put($image->getClientOriginalName(), file_get_contents($image) );
+                $ex=$image->getClientOriginalExtension();
+                $filename  = $time. '.' .$ex;
+                $image->move('C:\xampp\htdocs\projet-laravel\project\uploads',$filename);
+                //$path = public_path('profilepics/' . $filename);
+                //Image::make($image->getRealPath())->resize(200, 200)->save($path);
+             
            }
-           
-           dd($images);
        }
-       else
-       {
-           dd(":(");
-       }*/
-        $ch = $request->tab_option;
-        $options = explode('-', $ch);
+       
+       // $ch = $request->tab_option;
+        //$options = explode('-', $ch);
         
         $createCar=Car::create($request->only([
                 'model'=>'model',
@@ -88,8 +84,8 @@ class CarsController extends Controller {
                 'basic_price'=>'basic_price',
                 'test_drive'=>'test_drive'
                 ]));
-        $createCar->optionCar()->attach($options);
-        /*$IdCar = $createCar->id; 
+       // $createCar->optionCar()->attach($options);
+        $IdCar = $createCar->id; 
         //dd($IdCar);
         //--GET OPTIONS LIST
         $ch = $request->tab_option;
@@ -104,7 +100,7 @@ class CarsController extends Controller {
                     DB::insert('insert into option_cars (car_id,option_id,option_price) values (?,?,?)', [$IdCar, $v, $request->$new_price]);
                 }
             }
-        }*/
+        }
         
         
 

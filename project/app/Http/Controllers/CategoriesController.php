@@ -68,7 +68,21 @@ class CategoriesController extends Controller
           }
           
         //dd($option);
-        return redirect(route('addcategorie'));
+        return redirect(route('categoryIndex'));
+    }
+    
+    public function destroyCat($id)
+    {
+        $category = Category::find($id);
+        $category->delete();
+        return redirect(route('categoryIndex'));
+    }
+
+    public function destroyOpt($id)
+    {
+        $option = Option::find($id);
+        $option->delete();
+        return redirect(route('categoryIndex'));
     }
 
     /**

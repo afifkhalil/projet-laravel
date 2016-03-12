@@ -12,4 +12,8 @@ class TestDriveDay extends Model
     public function testDriveHour(){
         return $this->hasMany('App\TestDriveHour');
     }
+    public function scopeListDateDispo($query,$id)
+    {
+        return $query->where('car_id','=', $id);
+    }
 }

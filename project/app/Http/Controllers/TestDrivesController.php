@@ -10,6 +10,7 @@ use DateTime;
 use App\TestDriveDay;
 use App\TestDriveHour;
 
+
 class TestDrivesController extends Controller {
 
     /**
@@ -60,22 +61,23 @@ class TestDrivesController extends Controller {
         for ($i = 0; $i <= $dif; $i++) {
            $day = date('l', strtotime($d));
             if ($day != 'Sunday') {
-                 $days= new TestDriveDay();
-                 $days->date=$datedebut;
-                 $days->car_id=$car;
-                 $days->save();
-                 $day_id=$days->id;
-               /* for ($h = 8; $h <17; $h++) {
-                    if($h!=13)
-                    {
+                 
+                    //insertion de jour disponible  
+                        $days= new TestDriveDay();
+                         $days->date=$datedebut;
+                         $days->car_id=$car;
+                         $days->save();
+                         $day_id=$days->id;
+
+                    //insertion de l'heure non disponible '13' de ce jour 
                         $hour=new TestDriveHour();
-                        $hour->hour=$h;
+                        $hour->hour=13;
                         $hour->customer_id=1;
                         $hour->day_id=$day_id;
                         $hour->save();
-                    }
                     
-                }*/
+                    
+                
             }
             $date = strtotime("+1 day", strtotime($d));
             $d = date("Y-m-d", $date);
@@ -121,7 +123,38 @@ class TestDrivesController extends Controller {
     public function update(Request $request, $id) {
         //
     }
+    public function showCalendar($id)
+    { 
+        $title='Calendrier';
+        $dispo = array();
 
+        $dateDispo=TestDriveDay::ListDateDispo($id)->get();
+        
+        
+        
+        return view('TestDrives/calendar-Test-Drive', ['title' => $title,'dateDispo'=>$dateDispo,'dispo'=>$dispo]);
+    }
+    
+    public function showHours($id)
+    {
+        $hours=TestDriveHour::ListHeureIndispo($id)->get();
+        //dd($hours);
+        $in = array();
+        foreach($hours as $hour){
+            $in['h'] = $hour->hour;
+            if( $hour->customer_id == 1){
+                $in['state'] = 'false';
+            }
+            else {
+                $in['state'] = 'true';
+            }
+            
+            $re[$hour->id] = $in;
+           
+        }
+        $re = json_encode($re);
+        return $re;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -129,7 +162,9 @@ class TestDrivesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        $day=TestDriveDay::find($id);
+        $day->delete();
+        return redirect(route('carList'));
     }
 
 }

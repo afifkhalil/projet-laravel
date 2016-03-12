@@ -18,11 +18,11 @@
     <div class="row">
         <div class="col-md-4">
             {!! Form::label('','Date Début:') !!}
-            {!! Form::text('date_debut',$date,['class'=>'datepicker form-control ']) !!}
+            {!! Form::text('date_debut','',['class'=>'datepicker form-control','placeholder'=>$date]) !!}
         </div>    
         <div class="col-md-4">
             {!! Form::label('','Date Fin:') !!}
-            {!! Form::text('date_fin','',['class'=>'datepicker form-control ']) !!}
+            {!! Form::text('date_fin','',['class'=>'datepicker form-control','placeholder'=>$date]) !!}
         </div>    
 </div>
 </div>

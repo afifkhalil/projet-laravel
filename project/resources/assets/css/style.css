@@ -39,3 +39,40 @@
     width: 800px;
     max-width: 95%;
 }
+.btn.btn-success.pull-right
+{
+    visibility:hidden;
+}
+
+.fa.fa-times-circle 
+{
+    visibility:hidden;
+}
+.form-delete:hover .fa.fa-times-circle
+{
+    visibility:visible;
+}
+.suppCat{
+    background: #F5F5F5;
+    border: 0;
+}
+.suppOp{
+    border: 0;
+    background: #FFFFFF;
+}
+.fa-times-circle{
+    color:#FF0000;
+}
+.droite
+{
+    float:right;
+    margin-bottom: 10px;
+}
+.supp
+{
+    background: #DF0101;
+    border: 0;
+}
+.haut{
+    margin: 10px;
+}

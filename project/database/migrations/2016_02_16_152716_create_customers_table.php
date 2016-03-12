@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
+use App\Customer;
 class CreateCustomersTable extends Migration
 {
     /**
@@ -24,6 +24,7 @@ class CreateCustomersTable extends Migration
             //$table->foreign('id_commercial')->references('id_commercial')->on('commercials')->onUpdate('cascade');
             $table->timestamps();
         });
+         Customer::create(['name'=>'chabah','last_name'=>'chabah','cin'=>0,'mail'=>'mail','adress'=>'adress','function'=>'fonction' ,'commercial_id'=>0]);
 
 
     }

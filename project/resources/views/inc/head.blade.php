@@ -11,7 +11,7 @@
     @yield('link')
     
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('project/resources/assets/dist/css/font-awesome.min.css')}}"rel="stylesheet">
+    <link href="{{ asset('project/resources/assets/css/font-awesome/css/font-awesome.min.css')}}"rel="stylesheet">
     <link href="{{ asset('project/resources/assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('project/resources/assets/plugins/datePicker/css/datepicker.css')}}" rel="stylesheet">
     <link href="{{ asset('project/resources/assets/css/style.css')}}" rel="stylesheet">
