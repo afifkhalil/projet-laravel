@@ -76,3 +76,12 @@
 .haut{
     margin: 10px;
 }
+.picker-switch.accordion-toggle{
+    display: none;
+}
+.cal{
+    margin-top: 100px;
+}
+#datetimepicker12 td.clicked{
+    background: #5CB85C;
+}

@@ -9,6 +9,7 @@ use App\Car;
 use DateTime;
 use App\TestDriveDay;
 use App\TestDriveHour;
+use App\Customer;
 
 
 class TestDrivesController extends Controller {
@@ -64,7 +65,7 @@ class TestDrivesController extends Controller {
                  
                     //insertion de jour disponible  
                         $days= new TestDriveDay();
-                         $days->date=$datedebut;
+                         $days->date_day=$datedebut;
                          $days->car_id=$car;
                          $days->save();
                          $day_id=$days->id;
@@ -126,17 +127,59 @@ class TestDrivesController extends Controller {
     public function showCalendar($id)
     { 
         $title='Calendrier';
-        $dispo = array();
-
+        
+        $customers = array();
+        $custs = Customer::all();
+        foreach ($custs as $c) {
+            $customers[$c->id] = $c->last_name." ".$c->name;
+        }
+        
         $dateDispo=TestDriveDay::ListDateDispo($id)->get();
-        
-        
-        
-        return view('TestDrives/calendar-Test-Drive', ['title' => $title,'dateDispo'=>$dateDispo,'dispo'=>$dispo]);
+       $nondispo = array();
+        if(!empty($dateDispo[0]))
+                 {   $dateBegin= $dateDispo[0]->date_day;
+                    $dateEnd= $dateDispo[count($dateDispo)-1]->date_day; 
+                    
+                    $test=$dateBegin;
+                    $i=0;
+                    foreach($dateDispo as $d)
+                    { 
+                        if($test!=$d->date_day)
+                         {
+                            while($test!=$d->date_day)
+                                {  // echo $d->date_day."!=".$test."-----------";
+                                    array_push($nondispo, $test);
+                                    $test = strtotime("+1 day", strtotime($test));
+                                    $test= date("Y-m-d", $test);
+                                } 
+                                $test = strtotime("+1 day", strtotime($test));
+                                $test= date("Y-m-d", $test);
+                         }
+                        else 
+                         {
+                            $test = strtotime("+1 day", strtotime($test));
+                            $test= date("Y-m-d", $test);       
+                         }
+
+                    }
+                    $nondispo=str_replace("-","/",json_encode($nondispo));
+                    
+                    return view('TestDrives/calendar-Test-Drive', ['title' => $title,'dateDispo'=>$dateDispo,'dateEnd'=>$dateEnd,
+                                                                    'dateBegin'=>$dateBegin,'carid'=>$id,'nondispo'=>$nondispo,
+                                                                    'customers'=>$customers]);
+                }
+            else 
+            { return view('TestDrives/calendar-Test-Drive', ['title' => $title,'carid'=>$id,'dateBegin'=>"",
+                                                             'dateEnd'=>"",'nondispo'=>"[]",'customers'=>$customers]);
+            } 
     }
     
-    public function showHours($id)
-    {
+    public function showHours($date,$car)
+    {   
+        $row= TestDriveDay::IdDate($date,$car)->get();
+        //dd($row);
+        $id=$row[0]->id;
+        
         $hours=TestDriveHour::ListHeureIndispo($id)->get();
         //dd($hours);
         $in = array();
@@ -148,11 +191,12 @@ class TestDrivesController extends Controller {
             else {
                 $in['state'] = 'true';
             }
-            
+                $in['id']=$id;
             $re[$hour->id] = $in;
            
         }
         $re = json_encode($re);
+       
         return $re;
     }
     /**
@@ -165,6 +209,16 @@ class TestDrivesController extends Controller {
         $day=TestDriveDay::find($id);
         $day->delete();
         return redirect(route('carList'));
+    }
+    public function addHour(Request $request)
+    {
+        $hour= new TestDriveHour();
+        $hour->hour=$request->heure;
+      
+        $hour->customer_id=$request->customer;
+        $hour->day_id=$request->id_day;
+        $hour->save();
+          dd("hmd");
     }
 
 }

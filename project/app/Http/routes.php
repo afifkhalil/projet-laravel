@@ -43,8 +43,9 @@ Route::group(['prefix'=>'dashboard/testDrive',  'middleware' => ['web']], functi
    Route::get('/',['as'=>'testDriveIndex', 'uses'=>'TestDrivesController@index']);
    Route::post('/addDisponibility',['as'=>'adddisp', 'uses'=>'TestDrivesController@store']);
    Route::get('/Calendar/{id}',['as'=>'Calendar', 'uses'=>'TestDrivesController@showCalendar']);
-   Route::get('/Hours/{id}',['as'=>'Hours', 'uses'=>'TestDrivesController@showHours']);
+   Route::get('/hours/{date}/{car}',['as'=>'hours', 'uses'=>'TestDrivesController@showHours']);
    Route::get('/supp-day/{id}',['as'=>'supp-day', 'uses'=>'TestDrivesController@destroy']);
+   Route::post('/add-hour',['as'=>'add-hour', 'uses'=>'TestDrivesController@addHour']);
 
    
   

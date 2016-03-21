@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/projet-laravel/resources/views/disponibility-test-drive.blade.php</file>
-            <file>file:/C:/xampp/htdocs/projet-laravel/app/TestDriveHour.php</file>
-            <file>file:/C:/xampp/htdocs/projet-laravel/app/Http/Controllers/CategoriesController.php</file>
-            <file>file:/C:/xampp/htdocs/projet-laravel/app/Http/Controllers/TestDrivesController.php</file>
-            <file>file:/C:/xampp/htdocs/projet-laravel/app/Http/routes.php</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/app/Customer.php</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/app/Http/Controllers/TestDrivesController.php</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/resources/assets/js/main_1.js</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/resources/assets/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/app/TestDriveDay.php</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/app/Http/routes.php</file>
+            <file>file:/C:/xampp/htdocs/projet-laravel/project/resources/views/TestDrives/calendar-Test-Drive.blade.php</file>
         </group>
     </open-files>
 </project-private>

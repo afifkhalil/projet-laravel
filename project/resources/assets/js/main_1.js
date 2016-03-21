@@ -141,7 +141,7 @@ function cloneAjax(x,y,parent){
 }
 
 
-$('.modifier').on('click', function(e){
+/*$('.modifier').on('click', function(e){
     
     e.preventDefault();
     
@@ -166,7 +166,7 @@ $('.modifier').on('click', function(e){
         }
     });
 });
-
+*/
 $('.supprimer').on('click', function(e){
     
     e.preventDefault();
@@ -186,12 +186,70 @@ $('.supprimer').on('click', function(e){
     });
 });
 
+var datepicker  = $('#datetimepicker12');
+var datepickerTD  = $('#datetimepicker12 td');
+
+datepicker.on('click', '.day', function(e){
+    e.preventDefault();
+    datepickerTD.removeClass('clicked')
+     $(this).addClass('clicked');
+    var dates=$(this).attr('data-day');
+    dates=dates.replace('/','-');
+    dates=dates.replace('/','-');
+    var Route=idDayRoute+dates+'/'+carid;
+    $.ajax({
+        url: Route,
+        type: 'GET',
+        data: '',
+        dataType: 'text',
+        success: function(response) {
+            var json_obj = $.parseJSON(response);
+            var id;
+            var state;
+              // if($.inArray(i, tabheurs)==0)
+            for(var j=9;j<=16;j++)
+            {
+                  $('.h-'+j).removeClass('disabled').find('input').attr('disabled', false).attr('checked',false) ;
+                  $('.h-'+j).find('span').html('');
+            }
+            for (var i in json_obj) 
+            {   if(json_obj[i].state=='false')
+                {
+                    state='(non disponible)';
+                } 
+                else
+                {
+                    state='(réservée)';
+                }
+                 $('.h-'+json_obj[i].h).addClass('disabled').find('input').attr('disabled', true) ;
+                 
+                 id=json_obj[i].id;
+                 $('.h-'+json_obj[i].h).find('span').html(state);
+                 console.log($('.h-'+json_obj[i].h).find('label').val());
+                
+            }
+              $('.day_id').val(id);
+         //json_obj[i].state
+        /* for(var i in json_obj)
+         {}*/
+        },
+        fail: function(response) {
+                 
+        }
+    });
+});
+
+    
+  // console.log(dates);
+ 
+datepicker.on('control space', function(e){
+		$('#datetimepicker12 td').attr('data-action', '');
+     });
+datepickerTD.attr('data-action', '');
 
 
-
-
-if($('.datepicker').length>0){
-$('.datepicker').datepicker();
+if($('.datepicker-drive').length>0){
+   $('.datepicker-drive').datepicker();
 }
 
 

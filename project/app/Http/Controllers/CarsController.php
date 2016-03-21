@@ -59,6 +59,7 @@ class CarsController extends Controller {
        {    
            $i=0;
            $images=Input::file('picture');
+           $imgs=array();
            foreach($images as $image){
                
                 ++$i;
@@ -67,23 +68,24 @@ class CarsController extends Controller {
                 Storage::put($image->getClientOriginalName(), file_get_contents($image) );
                 $ex=$image->getClientOriginalExtension();
                 $filename  = $time. '.' .$ex;
-                $image->move('C:\xampp\htdocs\projet-laravel\project\uploads',$filename);
+                //$image->move('C:\xampp\htdocs\projet-laravel\project\uploads',$filename);
                 //$path = public_path('profilepics/' . $filename);
                 //Image::make($image->getRealPath())->resize(200, 200)->save($path);
+                $imgs[$i-1]=$filename;
              
            }
        }
-       
+       //dd($imgs);
        // $ch = $request->tab_option;
         //$options = explode('-', $ch);
-        
-        $createCar=Car::create($request->only([
-                'model'=>'model',
-                'picture'=>  json_encode($request->file('picture')),
-                'video' => 'video',
-                'basic_price'=>'basic_price',
-                'test_drive'=>'test_drive'
-                ]));
+            $createCar= new Car();
+            //$createCar->model=$request->model;
+            //$createCar->picture=json_encode($imgs);
+            $createCar->video=$request->video;
+            $createCar->basic_price=$request->basic_price;
+            $createCar->test_drive=$request->test_drive;
+            $createCar->save();
+
        // $createCar->optionCar()->attach($options);
         $IdCar = $createCar->id; 
         //dd($IdCar);
@@ -103,7 +105,7 @@ class CarsController extends Controller {
         }
         
         
-
+        return view('Cars/list-cars');
     }
 
     /**

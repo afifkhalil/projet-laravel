@@ -18,11 +18,11 @@
     <div class="row">
         <div class="col-md-4">
             {!! Form::label('','Date Début:') !!}
-            {!! Form::text('date_debut','',['class'=>'datepicker form-control','placeholder'=>$date]) !!}
+            {!! Form::text('date_debut','',['class'=>'datepicker-drive form-control','placeholder'=>$date]) !!}
         </div>    
         <div class="col-md-4">
             {!! Form::label('','Date Fin:') !!}
-            {!! Form::text('date_fin','',['class'=>'datepicker form-control','placeholder'=>$date]) !!}
+            {!! Form::text('date_fin','',['class'=>'datepicker-drive form-control','placeholder'=>$date]) !!}
         </div>    
 </div>
 </div>
@@ -32,5 +32,5 @@
 @stop
 
 @section('js')
-<script src="{{ url('../resources/assets/plugins/datePicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url('project/resources/assets/plugins/datePicker/js/bootstrap-datepicker.js') }}"></script>
 @stop
