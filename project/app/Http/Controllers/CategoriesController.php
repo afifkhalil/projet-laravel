@@ -112,7 +112,7 @@ class CategoriesController extends Controller
         
        
         $n=  intval($request->nb_option);
-        
+         $tab = array();
         for($i=0;$i<$n;$i++)
          {
             $name = "name_option_".$i;
@@ -122,9 +122,11 @@ class CategoriesController extends Controller
             $option->description = $request->$desc;
             $option->category_id = $request->category_id;
             $option->save();
+            $tab[$i]=$option->id;
         
          }
-        
+         
+        return(json_encode($tab));
         //$option->attachCategory($request->category_id);
     }
 

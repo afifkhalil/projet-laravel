@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Car;
+use App\User;
 use DateTime;
 use App\TestDriveDay;
 use App\TestDriveHour;
@@ -21,6 +22,7 @@ class TestDrivesController extends Controller {
      */
     public function index() {
         //
+        //dd($this->User()->id);
 
         $cars = array();
         $car = Car::all();
@@ -64,19 +66,12 @@ class TestDrivesController extends Controller {
             if ($day != 'Sunday') {
                  
                     //insertion de jour disponible  
-                        $days= new TestDriveDay();
-                         $days->date_day=$datedebut;
-                         $days->car_id=$car;
-                         $days->save();
+                       
+                         $days =  TestDriveDay::firstOrCreate(['date_day'=>$datedebut, 'car_id'=>$car ]);
                          $day_id=$days->id;
 
                     //insertion de l'heure non disponible '13' de ce jour 
-                        $hour=new TestDriveHour();
-                        $hour->hour=13;
-                        $hour->customer_id=1;
-                        $hour->day_id=$day_id;
-                        $hour->save();
-                    
+                        TestDriveHour::firstOrCreate(['hour'=>13, 'customer_id'=>1,'day_id'=>$day_id ]);
                     
                 
             }
@@ -129,7 +124,7 @@ class TestDrivesController extends Controller {
         $title='Calendrier';
         
         $customers = array();
-        $custs = Customer::all();
+        $custs = Customer::GetCustomersAsUser(Controller::User()->id)->get();
         foreach ($custs as $c) {
             $customers[$c->id] = $c->last_name." ".$c->name;
         }
@@ -184,12 +179,29 @@ class TestDrivesController extends Controller {
         //dd($hours);
         $in = array();
         foreach($hours as $hour){
+             $cust= Customer::find($hour->customer_id);
             $in['h'] = $hour->hour;
             if( $hour->customer_id == 1){
                 $in['state'] = 'false';
+                $in['annuler'] = 'false';
             }
             else {
                 $in['state'] = 'true';
+                if($cust->commercial_id==Controller::User()->id)
+                {
+                    $in['annuler'] = 'true';
+                    $in['attach_id']=$cust->id;
+                    $in['attach_name']=$cust->name;
+                    $in['line'] = 'Pour';
+                    $in['id']=$hour->id;
+                }
+                else {
+                    $in['annuler'] = 'false';
+                    $in['attach_id']=$cust->commercial_id;
+                    $in['attach_name']=User::find($cust->commercial_id)->name;
+                    $in['line'] = 'Par';
+                }
+               
             }
                 $in['id']=$id;
             $re[$hour->id] = $in;
@@ -205,12 +217,16 @@ class TestDrivesController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        $day=TestDriveDay::find($id);
+    public function destroy(Request $request ,$id) {
+        $dayid=$request->id_day;
+        $day=TestDriveDay::find($dayid);
         $day->delete();
-        return redirect(route('carList'));
+         return redirect(route('Calendar',$id));
     }
-    public function addHour(Request $request)
+    
+    
+    
+    public function addHour(Request $request ,$id)
     {
         $hour= new TestDriveHour();
         $hour->hour=$request->heure;
@@ -218,7 +234,7 @@ class TestDrivesController extends Controller {
         $hour->customer_id=$request->customer;
         $hour->day_id=$request->id_day;
         $hour->save();
-          dd("hmd");
+            return redirect(route('Calendar',$id)); 
     }
 
 }

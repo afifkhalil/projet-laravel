@@ -17,5 +17,8 @@ class Customer extends Model
     {
         return $query->where('id', '>', 1);
     }
-
+    public function scopeGetCustomersAsUser($query,$id)
+    {
+        return $query->where('commercial_id', '=', $id);
+    }
 }

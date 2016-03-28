@@ -1,4 +1,4 @@
-@extends("default")
+@extends("default-full-width")
 @section('title',$title)
 @section('content')
 
@@ -8,16 +8,16 @@
 
     @if(isset($dateDispo))
     <div class="row">
-            <div id="datetimepicker12" class="cal  col-md-8"></div>
+            <div id="datetimepicker12" class="cal  col-md-6"></div>
             
-    @endif 
-    <div class="hours col-md-4" id="listhours">
-        <h2>Heurs</h2><hr>
-        {!! Form::open(['method'=>'post', 'url'=>route('add-hour')])!!}  
+  
+    <div class="hours col-md-6" id="listhours">
+        <h2>Les Heurs de : <span class="showDate"></span></h2><hr>
+        {!! Form::open(['method'=>'post', 'url'=>route('add-hour',$carid)])!!}  
         <div class="row">
             <div class="col-md-12">
                 <div class="radio h-9">
-                    <label class="state"><input type="radio" name="heure" value="9">9</label>
+                    <label class="state"><input type="radio" name="heure" value="9" required>9</label>
                      <span></span>
                 </div>
                 <div class="radio h-10">
@@ -57,11 +57,20 @@
             {!! Form::select('customer', $customers,null,['class'=>'form-control ']) !!}<hr>
             {!! Form::hidden('id_day', "",['class'=>'day_id']) !!}
             <button class="btn btn-success" type="submit">Réserver</button>
-        {!!Form::close()!!}    
-    </div>
+        {!!Form::close()!!}  
+       
+        {!! Form::open(['method'=>'post', 'url'=>route('supp-day',$carid)])!!} 
+           
+            {!! Form::hidden('id_day', "",['class'=>'day_id']) !!}
+            <button class="btn btn-success" type="submit">Supprimer</button>
+            
+        {!!Form::close()!!}  
+    </div>           
   </div>
+    @endif
+    <button class="btn btn-info btn-xs hidden" id="btn-anuuler"  data-id="">Annuler</button>
 @stop
-
+{{ Auth::user()->name}}
 @section('js')
 <script type="text/javascript" src="{{ url('project/resources/assets/plugins/calendar/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('project/resources/assets/plugins/calendar/bootstrap-datetimepicker.min.js')}}"></script>

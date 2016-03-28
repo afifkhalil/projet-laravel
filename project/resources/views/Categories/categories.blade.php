@@ -100,16 +100,22 @@
     </div>    
 </div> 
     
-<div class="hidden row" id="ajax-clone">
-       <div class="col-md-2">
-            {!! Form::label('','Option :') !!}
+<div class="hidden row form-delete" id="ajax-clone">
+             <div class="col-md-2">
+                {!! Form::label('','Option :') !!}
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <p class="name"><b>Nom: </b></p>
             </div>
             <div class="col-md-5">
                 <p class="desc"><b>Déscription: </b></p>
             </div>
+             <div class="col-md-1">
+                {!! Form::open(['class'=>'form-delete-option','method' => 'DELETE','route' => ['destroyOpt',0] ]) !!}
+                 <button type="submit" class="fa fa-times-circle suppOp"></button>
+                {!! Form::close() !!}
+             </div>
+    
 </div>
                     
 @stop

@@ -17,6 +17,12 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function __construct() {
+        $this->middleware('web');
+    }
+    
+    
     public function index()
     {
         $title="Ajout commercial";
@@ -53,9 +59,17 @@ class CustomersController extends Controller
             return redirect(route('addcustomerIndex'))->withErrors($validator->errors());
         }
 
-        else {
-            Customer::create($request->all());
-
+        else {            
+            $customer= new Customer();
+            $customer->name=$request->name;
+            $customer->last_name=$request->last_name;
+            $customer->cin=$request->cin;
+            $customer->mail=$request->mail;
+            $customer->adress=$request->adress;
+            $customer->function=$request->function;
+            $customer->commercial_id=  Controller::User()->id;
+           
+            $customer->save();
         }
         //$newCustomer =
         // attacher client au commercial courant
@@ -117,8 +131,7 @@ class CustomersController extends Controller
 
     public function listcustomers() {
         $title = "List des clients";
-
-        $customers = Customer::ListCustomer()->get();
+        $customers = Customer::GetCustomerAsUser(Controller::User()->id)->get();
 
         return view('Customers/list-customers', ['title' => $title, 'customers' => $customers]);
     }

@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -17,11 +16,13 @@
 
 Route::group(['prefix'=>'dashboard/cars',  'middleware' => ['web']], function(){
     //  Routes of Cars
-   Route::get('/',['as'=>'carIndex', 'uses'=>'CarsController@index']);
-   Route::post('add-car',['as'=>'addcar', 'uses'=>'CarsController@store']);
+   Route::get('/',['middleware' => ['permission:add-car'],'as'=>'carIndex', 'uses'=>'CarsController@index']);
+   Route::post('add-car',[ 'as'=>'addcar', 'uses'=>'CarsController@store']);
    Route::put('edit','CarsController@edit');
    Route::get('list',['as'=>'carList', 'uses'=>'CarsController@listcars']);
    Route::get('affiche/{id}',['as'=>'affiche', 'uses'=>'CarsController@affiche']);
+   
+   
 });
 Route::group(['prefix'=>'dashboard/categories',  'middleware' => ['web']], function(){
    
@@ -36,6 +37,7 @@ Route::group(['prefix'=>'dashboard/categories',  'middleware' => ['web']], funct
   
 });
 
+
 Route::group(['prefix'=>'dashboard/testDrive',  'middleware' => ['web']], function(){
    
    //  Routes of TestDrive
@@ -44,8 +46,8 @@ Route::group(['prefix'=>'dashboard/testDrive',  'middleware' => ['web']], functi
    Route::post('/addDisponibility',['as'=>'adddisp', 'uses'=>'TestDrivesController@store']);
    Route::get('/Calendar/{id}',['as'=>'Calendar', 'uses'=>'TestDrivesController@showCalendar']);
    Route::get('/hours/{date}/{car}',['as'=>'hours', 'uses'=>'TestDrivesController@showHours']);
-   Route::get('/supp-day/{id}',['as'=>'supp-day', 'uses'=>'TestDrivesController@destroy']);
-   Route::post('/add-hour',['as'=>'add-hour', 'uses'=>'TestDrivesController@addHour']);
+   Route::post('/supp-day/{id}',['as'=>'supp-day', 'uses'=>'TestDrivesController@destroy']);
+   Route::post('/add-hour/{id}',['as'=>'add-hour', 'uses'=>'TestDrivesController@addHour']);
 
    
   
@@ -82,4 +84,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
 });

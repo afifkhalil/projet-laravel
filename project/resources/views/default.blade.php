@@ -6,13 +6,17 @@
   <body>
 
         @include('inc.menu')
-
+           
         <div class="container">
     <div class="row">
       <div class="col-md-9">
         @yield('content')
       </div>
     <div class="col-md-3">
+        @if (!Auth::guest())
+        <strong>{{ Auth::user()->name }}</strong>
+      
+        @endif
       <?php
       $customers = App\Customer::all();
       ?>

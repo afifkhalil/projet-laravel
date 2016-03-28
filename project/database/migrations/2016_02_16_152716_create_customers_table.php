@@ -26,7 +26,6 @@ class CreateCustomersTable extends Migration
         });
          Customer::create(['name'=>'chabah','last_name'=>'chabah','cin'=>0,'mail'=>'mail','adress'=>'adress','function'=>'fonction' ,'commercial_id'=>0]);
 
-
     }
 
     /**
